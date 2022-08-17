@@ -1,5 +1,6 @@
 package api.v1.service;
 
+import api.v1.converter.CityRequestConverter;
 import api.v1.entity.User;
 import api.v1.entity.bussinessType.Bussiness;
 import api.v1.entity.region.CityEnum;
@@ -49,9 +50,9 @@ public class UserService {
         Page<User> users = userRepository.findAll(pageable);
         return users;
     }
-    public Page<User> findAllByUserCustomRepositoryImpl(int page, int size, CityEnum city, Bussiness business,String name) {
+    public Page<User> findAllByUserCustomRepositoryImpl(int page, int size, String city, String business,String name) {
         //이가 없으면 잇몸으로 하면 된다
-        List<User> userList = userCustomRepository.findByRegionOrBusinessOrName(city,business,name);
+        List<User> userList = userCustomRepository.findByRegionOrBusinessOrName(CityEnum.of(city),Bussiness.of(business),name);
 
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC,"name");
         final int start = (int)pageable.getOffset();

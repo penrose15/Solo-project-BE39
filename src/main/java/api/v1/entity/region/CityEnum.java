@@ -49,4 +49,15 @@ public enum CityEnum implements RegionModelExt{
     public static List<RegionEnum> getRegionEnum() {
         return RegionGroup.getParentEnum(RegionEnum.class);
     }//부모 코드
+
+    public static CityEnum of(String city) {
+        if(city == null) {
+            return null;
+        }
+        else {
+            CityEnum cityEnum = CityEnum.valueOf(city);
+            return cityEnum;
+        }
+
+    }
 }

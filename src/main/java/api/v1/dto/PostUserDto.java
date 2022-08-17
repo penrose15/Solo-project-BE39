@@ -6,6 +6,7 @@ import api.v1.entity.region.RegionEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Email;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @Validated
 @Builder
 public class PostUserDto {
@@ -29,6 +31,14 @@ public class PostUserDto {
 
     @NotNull
     private CityEnum city;
+
+    public CityEnum getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = CityEnum.valueOf(city);
+    }
 
     @NotNull
     private RegionEnum region;

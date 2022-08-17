@@ -55,12 +55,12 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity search(@Nullable @RequestParam(value = "city",required = false) String city,
-                                      @Nullable @RequestParam(value = "bussiness",required = false) String bussiness,
-                                      @Nullable @RequestParam(value = "name",required = false) String name,
+    public ResponseEntity search(@RequestParam(value = "city",required = false) String city,
+                                      @RequestParam(value = "bussiness",required = false) String bussiness,
+                                      @RequestParam(value = "name",required = false) String name,
                                        @RequestParam int page,
                                        @RequestParam int size) {
-        Page<User> userPage = userService.findAllByUserCustomRepositoryImpl(page-1,size, CityEnum.valueOf(CityEnum.class,city), Bussiness.valueOf(Bussiness.class,bussiness),name);
+        Page<User> userPage = userService.findAllByUserCustomRepositoryImpl(page-1,size, city, bussiness,name);
         List<User> list = userPage.getContent();
 
         return new ResponseEntity<>(

@@ -25,4 +25,13 @@ public enum Bussiness {
         this.key = key;
         this.value = value;
     }
+
+    public static Bussiness of(String bussiness) {
+        if(bussiness == null) {
+            return null;
+        }else {
+            Bussiness b = Bussiness.valueOf(bussiness);
+            return b;
+        }
+    }
 }

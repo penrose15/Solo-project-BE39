@@ -1,4 +1,4 @@
-https://xxx[= 전국 사장님 연합 커뮤니티
+= 전국 사장님 연합 커뮤니티
 :sectnums:
 :toc: left
 :toclevels: 4

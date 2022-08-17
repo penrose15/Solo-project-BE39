@@ -346,8 +346,8 @@ public class MemberControllerDocumentationTest {
         User user1 = User.builder().userId(1L)
                 .name("하현우")
                 .email("abc@gmail.com")
-                .city(CityEnum.강남구)
-                .region(RegionEnum.서울특별시)
+                .city(CityEnum.안산시)
+                .region(RegionEnum.경기도)
                 .bussiness(Bussiness.방송통신)
                 .build();
         User user2 = User.builder().userId(1L)
@@ -377,22 +377,26 @@ public class MemberControllerDocumentationTest {
         Page<User> users = new PageImpl<>(List.of(user1, user2),
                 PageRequest.of(0,10, Sort.Direction.DESC,"name"),2);
 
-        List<ResponseUserDto> responses = List.of(response1, response2);
-        given(userService.findAllByUserCustomRepositoryImpl(Mockito.anyInt(),Mockito.anyInt(),Mockito.any(CityEnum.class),Mockito.any(Bussiness.class),Mockito.anyString())).willReturn(users);
+        List<ResponseUserDto> responses = List.of(response2);
+        given(userService.findAllByUserCustomRepositoryImpl(Mockito.anyInt(),Mockito.anyInt(),Mockito.anyString(),Mockito.anyString(),Mockito.anyString())).willReturn(users);
         given(mapper.userToResponseDtos(Mockito.anyList())).willReturn(responses);
 
-
+        MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
+        info.add("page","1");
+        info.add("size","10");
+        info.add("city","강남구");
+        info.add("bussiness","금융");
+        info.add("name","김연아");
 
         ResultActions actions = mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/user/search")
                         .accept(MediaType.APPLICATION_JSON)
-                        .param("page","1")
-                        .param("size","10")
-                        .param("city","강남구")
-                        .param("bussiness","방송통신")
-                        .param("name","하현우")
+                        .params(info)
+
 
         );
+
+
 
         MvcResult result = actions.andExpect(status().isOk())
                 .andDo(document(
@@ -427,7 +431,7 @@ public class MemberControllerDocumentationTest {
                         )
                 )).andReturn();
         List list = JsonPath.parse(result.getResponse().getContentAsString()).read("$.data");
-        assertThat(list.size()).isEqualTo(2);
+        assertThat(list.size()).isEqualTo(1);
     }
 
 
