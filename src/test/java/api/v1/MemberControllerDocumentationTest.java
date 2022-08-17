@@ -218,7 +218,7 @@ public class MemberControllerDocumentationTest {
         given(mapper.userToResponseDto(Mockito.any(User.class))).willReturn(response);
 
         ResultActions actions = mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/{user-id}",userId)
+                RestDocumentationRequestBuilders.get("/user/{user-id}",userId)
                         .accept(MediaType.APPLICATION_JSON));
 
         actions.andExpect(status().isOk())
@@ -251,7 +251,7 @@ public class MemberControllerDocumentationTest {
 
     @Test
     @DisplayName("getmapping search")
-    void getsearchTest() throws Exception {
+    void getTest() throws Exception {
         String page = "1", size = "10";
 
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
@@ -396,7 +396,7 @@ public class MemberControllerDocumentationTest {
 
         MvcResult result = actions.andExpect(status().isOk())
                 .andDo(document(
-                        "get-users",
+                        "search-users",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestParameters(
